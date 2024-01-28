@@ -24,7 +24,7 @@ def get_all_characters(stellage_number):
     # Вам нужно определить, какие символы включать в каждой стиллаж и реализовать здесь соответствующую логику
 
     # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стойки
-    return list(itertools.product('abcdefghijklmnopqrstuvwxyz', repeat=stellage_number))
+    return list(itertools.product('абвгдеёжзийклмнопрстуфхцчшщъыьэюя', repeat=stellage_number))
 
 def get_book_characters(all_characters, book_number):
     # Мы получаем символы, из которых состоит книга
@@ -33,7 +33,7 @@ def get_book_characters(all_characters, book_number):
 
     # Убедитесь, что номер книги не превышает количество символов в стеллаже
     if book_number > len(all_characters):
-        raise ValueError('Invalid book number')
+        raise ValueError('Неверный номер книги')
     
     # Мы получаем символы, из которых состоит книга
     book_characters = list(all_characters[book_number - 1])
