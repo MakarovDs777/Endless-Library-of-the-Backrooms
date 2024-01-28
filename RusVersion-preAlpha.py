@@ -41,7 +41,7 @@ def get_book_characters(all_characters, book_number):
     return book_characters
 
 # Пример использован
-stellage_number = int(input("Enter the rack number: "))
-book_number = int(input("Enter the book number: "))
+stellage_number = int(input("Введите номер стиллажа: "))
+book_number = int(input("Введите номер книги: "))
 book_text = get_book_text(stellage_number, book_number)
-print("Book: ",book_text,sep="\n")
+print("Книга: ",book_text,sep="\n")
