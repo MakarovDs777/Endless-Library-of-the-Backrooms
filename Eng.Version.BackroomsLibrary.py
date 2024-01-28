@@ -34,7 +34,7 @@ def get_book_characters(all_characters, book_number):
 
     # Check that the book number does not exceed the number of characters in the rack
     if book_number > len(all_characters):
-        raise ValueError('Неверный номер книги')
+        raise ValueError('Invalid book number')
     
     # We get the characters that make up the book
     book_characters = list(all_characters[book_number - 1])
