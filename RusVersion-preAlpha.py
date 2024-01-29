@@ -10,7 +10,7 @@ def get_book_text(stellage_number, book_number):
     return text
 
 def get_characters(stellage_number, book_number):
-    # Мы получаем все возможные символы для этого стиллажа
+    # Мы получаем все возможные символы для этой стойки
     all_characters = get_all_characters(stellage_number)
     
     # Мы получаем символы, из которых состоит книга
@@ -19,12 +19,13 @@ def get_characters(stellage_number, book_number):
     return book_characters
 
 def get_all_characters(stellage_number):
-    # Мы получаем все возможные символы для этого стиллажа
-    # Например, для стиллажа № 1 это будут все буквы алфавита, знаки препинания и точки
-    # Вам нужно определить, какие символы включать в каждой стиллаж и реализовать здесь соответствующую логику
+    # Мы получаем все возможные символы для этой стойки
+    # Например, для стойки № 1 это будут все буквы алфавита, знаки препинания и точки
+    # Вам нужно определить, какие символы включать в каждую стойку
+    # и реализовать соответствующую логику здесь
 
     # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стойки
-    return list(itertools.product('абвгдеёжзийклмнопрстуфхцчшщъыьэюя., ', repeat=stellage_number))
+    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
     # Мы получаем символы, из которых состоит книга
@@ -40,8 +41,8 @@ def get_book_characters(all_characters, book_number):
     
     return book_characters
 
-# Пример использован
-stellage_number = int(input("Введите номер стиллажа: "))
+# Пример использования
+stellage_number = int(input("Введите номер стеллажа: "))
 book_number = int(input("Введите номер книги: "))
 book_text = get_book_text(stellage_number, book_number)
-print("Книга: ",book_text,sep="\n")
+print("Книга: ", book_text, sep="\n")
