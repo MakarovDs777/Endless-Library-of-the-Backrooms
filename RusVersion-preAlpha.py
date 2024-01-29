@@ -24,7 +24,7 @@ def get_all_characters(stellage_number):
     # Вам нужно определить, какие символы включать в каждой стиллаж и реализовать здесь соответствующую логику
 
     # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стойки
-    return list(itertools.product('абвгдеёжзийклмнопрстуфхцчшщъыьэюя', repeat=stellage_number))
+    return list(itertools.product('абвгдеёжзийклмнопрстуфхцчшщъыьэюя., ', repeat=stellage_number))
 
 def get_book_characters(all_characters, book_number):
     # Мы получаем символы, из которых состоит книга
