@@ -10,7 +10,7 @@ def get_book_text(stellage_number, book_number):
     return text
 
 def get_characters(stellage_number, book_number):
-    # Мы получаем все возможные символы для этой стойки
+    # Мы получаем все возможные символы для этого стеллажа
     all_characters = get_all_characters(stellage_number)
     
     # Мы получаем символы, из которых состоит книга
@@ -19,12 +19,12 @@ def get_characters(stellage_number, book_number):
     return book_characters
 
 def get_all_characters(stellage_number):
-    # Мы получаем все возможные символы для этой стойки
+    # Мы получаем все возможные символы для этого стеллажа
     # Например, для стойки № 1 это будут все буквы алфавита, знаки препинания и точки
-    # Вам нужно определить, какие символы включать в каждую стойку
+    # Вам нужно определить, какие символы включать в каждый стеллаж
     # и реализовать соответствующую логику здесь
 
-    # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стойки
+    # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стеллажа
     return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
