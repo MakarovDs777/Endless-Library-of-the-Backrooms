@@ -20,12 +20,12 @@ def get_characters(stellage_number, book_number):
 
 def get_all_characters(stellage_number):
     # We get all possible symbols for this rack
-    # For example, for rack number 1, it will be all the letters of the alphabet, punctuation marks and dots
+    # For example, for rack number 1, it will be all the letters of the alphabet, punctuation marks, and dots
     # You need to determine which symbols to include in each rack
     # and implement the appropriate logic here
 
     # We will return all possible characters consisting of as many letters as are equal to the number of the rack
-    return list(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number))
+    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
     # We get the characters that make up the book
@@ -45,4 +45,4 @@ def get_book_characters(all_characters, book_number):
 stellage_number = int(input("Enter the rack number: "))
 book_number = int(input("Enter the book number: "))
 book_text = get_book_text(stellage_number, book_number)
-print("Book: ",book_text,sep="\n")
+print("Book: ", book_text, sep="\n")
