@@ -6,9 +6,10 @@
 
 Идея основана на закулисных бесконечных библиотек бэкрумса, уровни библиотек которые мне удалось найти:
 
-[33](https://web.archive.org/web/20221002013505/https://backrooms.fandom.com/wiki/Level_33), [477](https://web.archive.org/web/20221004062455/https://backrooms.fandom.com/wiki/Level_477). [795](https://web.archive.org/web/20221003022315/https://backrooms.fandom.com/wiki/Level_795), [813](https://web.archive.org/web/20221013151359/https://backrooms.fandom.com/wiki/Level_813), (1142)[https://web.archive.org/web/20221013151359/https://backrooms.fandom.com/wiki/Level_1142], [4732](https://web.archive.org/web/20221001125648/https://backrooms.fandom.com/wiki/Level_4732), [230](https://web.archive.org/web/20221003224540/https://backrooms.fandom.com/wiki/Level_230)
+[33](https://web.archive.org/web/20221002013505/https://backrooms.fandom.com/wiki/Level_33), [477](https://web.archive.org/web/20221004062455/https://backrooms.fandom.com/wiki/Level_477). [795](https://web.archive.org/web/20221003022315/https://backrooms.fandom.com/wiki/Level_795), [813](https://web.archive.org/web/20221013151359/https://backrooms.fandom.com/wiki/Level_813), 
+[1142](https://web.archive.org/web/20221013151359/https://backrooms.fandom.com/wiki/Level_1142), [4732](https://web.archive.org/web/20221001125648/https://backrooms.fandom.com/wiki/Level_4732), [230](https://web.archive.org/web/20221003224540/https://backrooms.fandom.com/wiki/Level_230)
 
-Но не путайте эти два уровня, уровень 4732 представляет собой комбинацию всевозможных книг на всевозможных языках, которые вы только можете придумать, включая языки других инопланетных цивилизаций и т.д. Это бесконечное воплощение всезнание. А 230 - это просто комбинация всевозможных учебников на этом языке во всевозможных смыслах. И я сделал набросок реализации только 230-го уровня. Следовательно, есть к чему стремиться! 
+Больше всего мне понравился уровень 33 он представляет собой комбинацию всевозможных книг на всевозможных языках, которые вы только можете придумать, включая языки других инопланетных цивилизаций и т.д. И я сделал набросок реализации только 33-го уровня. Следовательно, есть к чему стремиться! 
 
 Я сделал только набросок... Я надеюсь, что у кого-то может возникнуть представление о том, как в полной мере подойти к реализации этого образа бесконечной библиотеки в будущем... А также о возможности разработки этого образа в будущем... Мне будет достаточно наиболее точно описать идею реализации этого образа, и тогда я смогу его запрограммировать.
 
