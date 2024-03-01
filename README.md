@@ -6,11 +6,7 @@
 
 Идея основана на закулисных бесконечных библиотек бэкрумса, уровни библиотек которые мне удалось найти:
 
-[Уровень 33](https://web.archive.org/web/20221002013505/https://backrooms.fandom.com/wiki/Level_33)  
-
-Level_4732:   https://web.archive.org/web/20221001125648/https://backrooms.fandom.com/wiki/Level_4732
-
-Level_230:   https://web.archive.org/web/20221003224540/https://backrooms.fandom.com/wiki/Level_230
+[33](https://web.archive.org/web/20221002013505/https://backrooms.fandom.com/wiki/Level_33), [4732](https://web.archive.org/web/20221001125648/https://backrooms.fandom.com/wiki/Level_4732), [230](https://web.archive.org/web/20221003224540/https://backrooms.fandom.com/wiki/Level_230)
 
 Но не путайте эти два уровня, уровень 4732 представляет собой комбинацию всевозможных книг на всевозможных языках, которые вы только можете придумать, включая языки других инопланетных цивилизаций и т.д. Это бесконечное воплощение всезнание. А 230 - это просто комбинация всевозможных учебников на этом языке во всевозможных смыслах. И я сделал набросок реализации только 230-го уровня. Следовательно, есть к чему стремиться! 
 
