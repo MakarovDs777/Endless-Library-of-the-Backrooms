@@ -25,7 +25,7 @@ def get_all_characters(stellage_number):
     # and implement the appropriate logic here
 
     # We will return all possible characters consisting of as many letters as are equal to the number of the rack
-    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number), 1000))
+    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
     # We get the characters that make up the book
