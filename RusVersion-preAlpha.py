@@ -28,7 +28,7 @@ def get_all_characters(stellage_number, languge_number):
     if languge_number == 1:
         return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
     else:
-        
+        return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
     # Мы получаем символы, из которых состоит книга
