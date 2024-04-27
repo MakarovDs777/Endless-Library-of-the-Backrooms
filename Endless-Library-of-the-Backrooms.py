@@ -45,7 +45,7 @@ def get_book_characters(all_characters, book_number):
     return book_characters
 
 # Пример использования
-languge_number = int(input("Language: 1 - Русский, 2 - English"))
+languge_number = int(input("Select a language: 1 - Русский, 2 - English"))
 stellage_number = int(input("Введите номер стеллажа: "))
 book_number = int(input("Введите номер книги: "))
 book_text = get_book_text(stellage_number, book_number)
