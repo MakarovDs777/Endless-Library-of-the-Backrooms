@@ -25,7 +25,7 @@ def get_all_characters(stellage_number):
     # и реализовать соответствующую логику здесь
 
     # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стеллажа
-    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., ', repeat=stellage_number), 1000))
+    return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
 
 def get_book_characters(all_characters, book_number):
     # Мы получаем символы, из которых состоит книга
