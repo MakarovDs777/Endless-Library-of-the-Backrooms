@@ -26,7 +26,7 @@ def get_all_characters(stellage_number, languge_number):
     
     # Мы вернем все возможные символы, состоящие из такого количества букв, которое равно номеру стеллажа
     if languge_number == 1:
-        return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
+        return list(itertools.islice(itertools.product('абвгдежзийклмнопрстуфхцчшщъыьэюя., 0123456789', repeat=stellage_number), 1000))
     else:
         return list(itertools.islice(itertools.product('abcdefghijklmnopqrstuvwxyz., 0123456789', repeat=stellage_number), 1000))
 
