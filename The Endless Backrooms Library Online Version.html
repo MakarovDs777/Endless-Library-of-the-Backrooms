@@ -38,21 +38,24 @@
     <label for="page">Номер страницы:</label>
     <input type="text" id="page" value="1">
     
+    <label for="interval">Интервал (сек.):</label>
+    <input type="text" id="interval" value="1">
+    
     <button onclick="switchPage()">Переключить</button>
+    <button onclick="startAutoSwitch()">Авто переключение</button>
+    <button onclick="stopAutoSwitch()">Стоп</button>
 </div>
 
 <div id="output"></div>
 
 <script>
+    let autoSwitchInterval;
+
     function createBookText(stellageNumber, bookNumber) {
-        // Создаем строку текста на основе номера стеллажа и страницы
         const baseCharacter = 'а'; // Базовый символ (русская буква 'а')
         const pageLength = stellageNumber; // Длина строки
         const text = baseCharacter.repeat(pageLength); // Повторяем базовый символ
-
-        // Определяем символ для страницы 'б', 'в', и т.д.
         const pageCharacter = String.fromCharCode('а'.charCodeAt(0) + bookNumber - 1);
-
         return text + pageCharacter; // Добавляем соответствующий символ для страницы
     }
 
@@ -65,12 +68,35 @@
         const stellageNumber = stellageNumberInput === '∞' ? Infinity : parseInt(stellageNumberInput, 10);
         const bookNumber = parseInt(document.getElementById('page').value, 10);
         const languageNumber = document.querySelector('input[name="language"]:checked').value;
-        
-        // Здесь игнорируем languageNumber, так как вывод один и тот же.
+
         const bookText = getBookText(stellageNumber, bookNumber);
         document.getElementById('output').innerText = bookText;
+    }
+
+    function startAutoSwitch() {
+        const intervalInput = parseFloat(document.getElementById('interval').value) * 1000; // Переводим секунды в миллисекунды
+        
+        if (autoSwitchInterval) {
+            clearInterval(autoSwitchInterval);
+        }
+
+        autoSwitchInterval = setInterval(() => {
+            const stellageNumber = Math.floor(Math.random() * 1001); // Случайный номер стеллажа от 0 до 1000
+            const bookNumber = Math.floor(Math.random() * 32) + 1; // Случайный номер страницы (1-32)
+
+            document.getElementById('stellage').value = stellageNumber;
+            document.getElementById('page').value = bookNumber;
+
+            switchPage();
+        }, intervalInput);
+    }
+
+    function stopAutoSwitch() {
+        clearInterval(autoSwitchInterval);
+        autoSwitchInterval = null; // Остановка автопереключения
     }
 </script>
 
 </body>
 </html>
+
