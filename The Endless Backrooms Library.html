@@ -1,0 +1,76 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бесконечная библиотека бэкрумса</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #output {
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow-y: scroll;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Бесконечная библиотека бэкрумса</h1>
+
+<div>
+    <label>Выберите язык:</label><br>
+    <input type="radio" id="russian" name="language" value="1" checked>
+    <label for="russian">Русский</label>
+    <input type="radio" id="english" name="language" value="2">
+    <label for="english">English</label>
+</div>
+
+<div>
+    <label for="stellage">Номер стеллажа:</label>
+    <input type="text" id="stellage" value="1">
+    
+    <label for="page">Номер страницы:</label>
+    <input type="text" id="page" value="1">
+    
+    <button onclick="switchPage()">Переключить</button>
+</div>
+
+<div id="output"></div>
+
+<script>
+    function createBookText(stellageNumber, bookNumber) {
+        // Создаем строку текста на основе номера стеллажа и страницы
+        const baseCharacter = 'а'; // Базовый символ (русская буква 'а')
+        const pageLength = stellageNumber; // Длина строки
+        const text = baseCharacter.repeat(pageLength); // Повторяем базовый символ
+
+        // Определяем символ для страницы 'б', 'в', и т.д.
+        const pageCharacter = String.fromCharCode('а'.charCodeAt(0) + bookNumber - 1);
+
+        return text + pageCharacter; // Добавляем соответствующий символ для страницы
+    }
+
+    function getBookText(stellageNumber, bookNumber) {
+        return createBookText(stellageNumber, bookNumber);
+    }
+
+    function switchPage() {
+        const stellageNumberInput = document.getElementById('stellage').value;
+        const stellageNumber = stellageNumberInput === '∞' ? Infinity : parseInt(stellageNumberInput, 10);
+        const bookNumber = parseInt(document.getElementById('page').value, 10);
+        const languageNumber = document.querySelector('input[name="language"]:checked').value;
+        
+        // Здесь игнорируем languageNumber, так как вывод один и тот же.
+        const bookText = getBookText(stellageNumber, bookNumber);
+        document.getElementById('output').innerText = bookText;
+    }
+</script>
+
+</body>
+</html>
