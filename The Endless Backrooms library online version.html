@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Бесконечная библиотека бэкрумса</title>
+    <title>The Endless Backroom Library</title> <!-- Изменено на английский -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,46 +17,65 @@
             overflow-y: scroll;
             white-space: pre-wrap;
         }
+        #searchResults {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
 
-<h1>Бесконечная библиотека бэкрумса</h1>
+<h1 id="title">Бесконечная библиотека бэкрумса</h1> <!-- Заголовок страницы изменяется через JavaScript -->
 
 <div>
-    <label>Выберите язык:</label><br>
-    <input type="radio" id="russian" name="language" value="1" checked>
-    <label for="russian">Русский</label>
-    <input type="radio" id="english" name="language" value="2">
+    <label>Choose Language:</label><br>
+    <input type="radio" id="russian" name="language" value="1" checked onclick="updateLanguage()">
+    <label for="russian">Russian</label>
+    <input type="radio" id="english" name="language" value="2" onclick="updateLanguage()">
     <label for="english">English</label>
 </div>
 
 <div>
-    <label for="stellage">Номер стеллажа:</label>
-    <input type="text" id="stellage" value="1">
+    <label id="stellageLabel">Номер стеллажа:</label>
+    <input type="text" id="stellage" value="0">
     
-    <label for="page">Номер страницы:</label>
+    <label id="pageLabel">Номер страницы:</label>
     <input type="text" id="page" value="1">
     
-    <label for="interval">Интервал (сек.):</label>
+    <label id="intervalLabel">Интервал (сек.):</label>
     <input type="text" id="interval" value="1">
     
-    <button onclick="switchPage()">Переключить</button>
-    <button onclick="startAutoSwitch()">Авто переключение</button>
-    <button onclick="stopAutoSwitch()">Стоп</button>
+    <button onclick="switchPage()" id="switchButton">Переключить</button>
+    <button onclick="startAutoSwitch()" id="autoSwitchButton">Авто переключение</button>
+    <button onclick="stopAutoSwitch()" id="stopAutoSwitchButton">Стоп</button>
+</div>
+
+<div>
+    <label for="inputText">Вставьте текст:</label><br>
+    <textarea id="inputText" rows="4" style="width: 100%;"></textarea>
+</div>
+
+<div>
+    <label id="startStellageLabel">Начальный стеллаж:</label>
+    <input type="text" id="startStellage" value="0">
+    <button onclick="searchText()" id="searchTextButton">Искать текст</button>
+    <button onclick="stopSearch()" id="stopSearchButton">Стоп</button>
 </div>
 
 <div id="output"></div>
+<div id="searchResults"></div>
 
 <script>
     let autoSwitchInterval;
+    let searchInterval;
 
     function createBookText(stellageNumber, bookNumber) {
-        const baseCharacter = 'а'; // Базовый символ (русская буква 'а')
-        const pageLength = stellageNumber; // Длина строки
-        const text = baseCharacter.repeat(pageLength); // Повторяем базовый символ
+        const baseCharacter = 'а'; 
+        const pageLength = stellageNumber; 
+        const text = baseCharacter.repeat(pageLength); 
         const pageCharacter = String.fromCharCode('а'.charCodeAt(0) + bookNumber - 1);
-        return text + pageCharacter; // Добавляем соответствующий символ для страницы
+        return text + pageCharacter; 
     }
 
     function getBookText(stellageNumber, bookNumber) {
@@ -67,22 +86,21 @@
         const stellageNumberInput = document.getElementById('stellage').value;
         const stellageNumber = stellageNumberInput === '∞' ? Infinity : parseInt(stellageNumberInput, 10);
         const bookNumber = parseInt(document.getElementById('page').value, 10);
-        const languageNumber = document.querySelector('input[name="language"]:checked').value;
-
+        
         const bookText = getBookText(stellageNumber, bookNumber);
         document.getElementById('output').innerText = bookText;
     }
 
     function startAutoSwitch() {
-        const intervalInput = parseFloat(document.getElementById('interval').value) * 1000; // Переводим секунды в миллисекунды
-        
+        const intervalInput = parseFloat(document.getElementById('interval').value) * 1000; 
+
         if (autoSwitchInterval) {
             clearInterval(autoSwitchInterval);
         }
 
         autoSwitchInterval = setInterval(() => {
-            const stellageNumber = Math.floor(Math.random() * 1001); // Случайный номер стеллажа от 0 до 1000
-            const bookNumber = Math.floor(Math.random() * 32) + 1; // Случайный номер страницы (1-32)
+            const stellageNumber = Math.floor(Math.random() * 1001); 
+            const bookNumber = Math.floor(Math.random() * 32) + 1; 
 
             document.getElementById('stellage').value = stellageNumber;
             document.getElementById('page').value = bookNumber;
@@ -93,7 +111,69 @@
 
     function stopAutoSwitch() {
         clearInterval(autoSwitchInterval);
-        autoSwitchInterval = null; // Остановка автопереключения
+        autoSwitchInterval = null; 
+    }
+
+    function searchText() {
+        const startStellageInput = parseInt(document.getElementById('startStellage').value, 10);
+        const inputText = document.getElementById('inputText').value.trim();
+        let results = '';
+        let found = false;
+
+        let stellageNumber = startStellageInput;
+        let bookNumber = 1;
+
+        if (searchInterval) {
+            clearInterval(searchInterval);
+        }
+
+        searchInterval = setInterval(() => {
+            const bookText = getBookText(stellageNumber, bookNumber);
+            document.getElementById('stellage').value = stellageNumber;
+            document.getElementById('page').value = bookNumber;
+
+            if (bookText.includes(inputText)) {
+                results += `Найдено на стеллаже ${stellageNumber}, странице ${bookNumber}:\n${bookText}\n\n`;
+                found = true;
+                clearInterval(searchInterval);
+                document.getElementById('searchResults').innerText = results;
+            }
+
+            bookNumber++; 
+            if (bookNumber > 32) { 
+                bookNumber = 1; 
+                stellageNumber++; 
+            }
+
+            if (stellageNumber > 1000) {
+                clearInterval(searchInterval);
+                if (!found) {
+                    results = 'Текст не найден.';
+                    document.getElementById('searchResults').innerText = results; 
+                }
+            }
+
+        }, 100); 
+    }
+
+    function stopSearch() {
+        clearInterval(searchInterval);
+        document.getElementById('searchResults').innerText = 'Поиск остановлен.'; 
+    }
+
+    function updateLanguage() {
+        const isEnglish = document.getElementById('english').checked;
+
+        document.getElementById('title').innerText = isEnglish ? 'The Endless Backroom Library' : 'Бесконечная библиотека бэкрумса';
+        document.getElementById('stellageLabel').innerText = isEnglish ? 'Shelf Number:' : 'Номер стеллажа:';
+        document.getElementById('pageLabel').innerText = isEnglish ? 'Page Number:' : 'Номер страницы:';
+        document.getElementById('intervalLabel').innerText = isEnglish ? 'Interval (sec):' : 'Интервал (сек.):';
+        document.getElementById('switchButton').innerText = isEnglish ? 'Switch' : 'Переключить';
+        document.getElementById('autoSwitchButton').innerText = isEnglish ? 'Auto Switch' : 'Авто переключение';
+        document.getElementById('stopAutoSwitchButton').innerText = isEnglish ? 'Stop' : 'Стоп';
+        document.getElementById('startStellageLabel').innerText = isEnglish ? 'Starting Shelf:' : 'Начальный стеллаж:';
+        document.getElementById('searchTextButton').innerText = isEnglish ? 'Search Text' : 'Искать текст';
+        document.getElementById('stopSearchButton').innerText = isEnglish ? 'Stop' : 'Стоп';
     }
 </script>
 
