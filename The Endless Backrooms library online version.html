@@ -1,7 +1,7 @@
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>The Endless Backroom Library</title>
     <style>
         body {
@@ -22,6 +22,13 @@
             border: 1px solid #ccc;
             padding: 10px;
         }
+        /* Для расположения полей в строку */
+        .search-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -38,13 +45,13 @@
 
 <div>
     <label id="stellageLabel">Номер стеллажа:</label>
-    <input type="text" id="stellage" value="0">
+    <input type="text" id="stellage" value="0" />
     
     <label id="pageLabel">Номер страницы:</label>
-    <input type="text" id="page" value="1">
+    <input type="text" id="page" value="1" />
     
     <label id="intervalLabel">Интервал (сек.):</label>
-    <input type="text" id="interval" value="1">
+    <input type="text" id="interval" value="1" />
     
     <button onclick="switchPage()" id="switchButton">Переключить</button>
     <button onclick="startAutoSwitch()" id="autoSwitchButton">Авто переключение</button>
@@ -56,9 +63,16 @@
     <textarea id="inputText" rows="4" style="width: 100%;"></textarea>
 </div>
 
-<div>
-    <label id="startStellageLabel">Начальный стеллаж:</label>
-    <input type="text" id="startStellage" value="0">
+<!-- Поля для поиска с начального стеллажа и страницы -->
+<div class="search-controls">
+    <div>
+        <label id="startStellageLabel">Начальный стеллаж:</label>
+        <input type="text" id="startStellage" value="0" />
+    </div>
+    <div>
+        <label id="startPageLabel">Начальная страница:</label>
+        <input type="text" id="startPage" value="1" />
+    </div>
     <button onclick="searchText()" id="searchTextButton">Искать текст</button>
     <button onclick="stopSearch()" id="stopSearchButton">Стоп</button>
 </div>
@@ -69,6 +83,7 @@
 <script>
     let autoSwitchInterval;
     let searchInterval;
+    let currentLanguage = 'ru'; // Текущий язык
 
     function createBookText(stellageNumber, bookNumber) {
         const baseCharacter = 'а'; 
@@ -86,7 +101,6 @@
         const stellageNumberInput = document.getElementById('stellage').value;
         const stellageNumber = stellageNumberInput === '∞' ? Infinity : parseInt(stellageNumberInput, 10);
         const bookNumber = parseInt(document.getElementById('page').value, 10);
-        
         const bookText = getBookText(stellageNumber, bookNumber);
         document.getElementById('output').innerText = bookText;
     }
@@ -115,54 +129,59 @@
     }
 
     function searchText() {
-        const startStellageInput = parseInt(document.getElementById('startStellage').value, 10);
+        const startStellage = parseInt(document.getElementById('startStellage').value, 10);
+        const startPage = parseInt(document.getElementById('startPage').value, 10);
         const inputText = document.getElementById('inputText').value.trim();
         let results = '';
         let found = false;
 
-        let stellageNumber = startStellageInput;
-        let bookNumber = 1;
+        let stellageNumber = startStellage;
+        let pageNumber = startPage;
 
         if (searchInterval) {
             clearInterval(searchInterval);
         }
 
         searchInterval = setInterval(() => {
-            const bookText = getBookText(stellageNumber, bookNumber);
+            const bookText = getBookText(stellageNumber, pageNumber);
             document.getElementById('stellage').value = stellageNumber;
-            document.getElementById('page').value = bookNumber;
+            document.getElementById('page').value = pageNumber;
 
             if (bookText.includes(inputText)) {
-                results += `Найдено на стеллаже ${stellageNumber}, странице ${bookNumber}:\n${bookText}\n\n`;
+                if (currentLanguage === 'en') {
+                    results += `Found at shelf ${stellageNumber}, page ${pageNumber}:\n${bookText}\n\n`;
+                } else {
+                    results += `Найдено на стеллаже ${stellageNumber}, странице ${pageNumber}:\n${bookText}\n\n`;
+                }
                 found = true;
                 clearInterval(searchInterval);
                 document.getElementById('searchResults').innerText = results;
             }
 
-            bookNumber++; 
-            if (bookNumber > 32) { 
-                bookNumber = 1; 
-                stellageNumber++; 
+            pageNumber++;
+            if (pageNumber > 32) {
+                pageNumber = 1;
+                stellageNumber++;
             }
 
             if (stellageNumber > 1000) {
                 clearInterval(searchInterval);
                 if (!found) {
-                    results = 'Текст не найден.';
-                    document.getElementById('searchResults').innerText = results; 
+                    results = currentLanguage === 'en' ? 'Text not found.' : 'Текст не найден.';
+                    document.getElementById('searchResults').innerText = results;
                 }
             }
-
-        }, 100); 
+        }, 100);
     }
 
     function stopSearch() {
         clearInterval(searchInterval);
-        document.getElementById('searchResults').innerText = 'Поиск остановлен.'; 
+        document.getElementById('searchResults').innerText = currentLanguage === 'en' ? 'Search stopped.' : 'Поиск остановлен.';
     }
 
     function updateLanguage() {
         const isEnglish = document.getElementById('english').checked;
+        currentLanguage = isEnglish ? 'en' : 'ru';
 
         document.getElementById('title').innerText = isEnglish ? 'The Endless Backroom Library' : 'Бесконечная библиотека бэкрумса';
         document.getElementById('stellageLabel').innerText = isEnglish ? 'Shelf Number:' : 'Номер стеллажа:';
@@ -172,9 +191,10 @@
         document.getElementById('autoSwitchButton').innerText = isEnglish ? 'Auto Switch' : 'Авто переключение';
         document.getElementById('stopAutoSwitchButton').innerText = isEnglish ? 'Stop' : 'Стоп';
         document.getElementById('startStellageLabel').innerText = isEnglish ? 'Starting Shelf:' : 'Начальный стеллаж:';
+        document.getElementById('startPageLabel').innerText = isEnglish ? 'Starting Page:' : 'Начальная страница:';
         document.getElementById('searchTextButton').innerText = isEnglish ? 'Search Text' : 'Искать текст';
         document.getElementById('stopSearchButton').innerText = isEnglish ? 'Stop' : 'Стоп';
-        document.getElementById('inputTextLabel').innerText = isEnglish ? 'Insert Text:' : 'Вставьте текст:'; // Добавлено изменение текста для вставки
+        document.getElementById('inputTextLabel').innerText = isEnglish ? 'Insert Text:' : 'Вставьте текст:';
     }
 </script>
 
